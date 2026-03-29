@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-getaway
   repo: GanakaBali/Belajar-Buat-CMS
   branch: main
 
