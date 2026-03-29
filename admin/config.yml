@@ -1,0 +1,22 @@
+backend:
+  name: github
+  repo: USERNAME/NAMA-REPO
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "home"
+    label: "Homepage"
+    files:
+      - file: "data/home.json"
+        label: "Hero Slider"
+        name: "hero"
+        fields:
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            fields:
+              - { label: "Judul", name: "title", widget: "string" }
+              - { label: "Deskripsi", name: "desc", widget: "text" }
