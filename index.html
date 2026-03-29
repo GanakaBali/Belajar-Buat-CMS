@@ -235,29 +235,29 @@
             <div class="slider-wrapper" id="sliderWrapper">
                 <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1693649113183-283327208912?q=80&w=437&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
                     <div class="slide-content">
-                        <h3 class="text-white font-bold">バリア島での快適な旅</h3>
-                        <p class="text-white">専門ガイド付きのカーセンターでご案内します</p>
+                        <h3 class="text-white font-bold slide-title"></h3>
+<p class="text-white slide-desc"></p>
                     </div>
                     <button class="slide-button" onclick="scrollToSection('car')">詳細を見る</button>
                 </div>
                 <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1575573330964-db3dad170190?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
                     <div class="slide-content">
-                        <h3 class="text-white font-bold">パッケージツアー</h3>
-                        <p class="text-white">自然と文化を満喫できるツアー</p>
+                        <h3 class="text-white font-bold slide-title"></h3>
+<p class="text-white slide-desc"></p>
                     </div>
                     <button class="slide-button" onclick="scrollToSection('tour')">詳細を見る</button>
                 </div>
                 <div class="slide" style="background-image: url('https://plus.unsplash.com/premium_photo-1674539250113-156c53fef54b?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bGVtYm9uZ2FuJTIwc25vcmtlbGluZ3xlbnwwfHwwfHx8MA%3D%3D');">
                     <div class="slide-content">
-                        <h3 class="text-white font-bold">ペニダ島ツアー</h3>
-                        <p class="text-white">美しい自然と岩場の魅力</p>
+                        <h3 class="text-white font-bold slide-title"></h3>
+<p class="text-white slide-desc"></p>
                     </div>
                     <button class="slide-button" onclick="scrollToSection('tour')">詳細を見る</button>
                 </div>
                 <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1620104493388-8747c90fcc2d?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
                     <div class="slide-content">
-                        <h3 class="text-white font-bold">日本語公認ガイド</h3>
-                        <p class="text-white">資格を持つ経験豊富な日本語ガイド</p>
+                        <h3 class="text-white font-bold slide-title"></h3>
+<p class="text-white slide-desc"></p>
                     </div>
                     <button class="slide-button" onclick="scrollToSection('tour')">詳細を見る</button>
                 </div>
@@ -662,6 +662,19 @@
     }
   });
 </script>
+<!--file untuk cms-->
+    <script>
+fetch('/data/home.json')
+  .then(res => res.json())
+  .then(data => {
+    const titles = document.querySelectorAll('.slide-title');
+    const descs = document.querySelectorAll('.slide-desc');
 
+    data.slides.forEach((slide, i) => {
+      if (titles[i]) titles[i].innerText = slide.title;
+      if (descs[i]) descs[i].innerText = slide.desc;
+    });
+  });
+</script>
 </body>
 </html>
