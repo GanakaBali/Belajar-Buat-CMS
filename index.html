@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Widi Baliは、日本語対応のバリア島でのカーセンターとツアー旅行サービスを提供するプロフェッショナルな旅行代理店です。安心・丁寧・親切なサービスで、最高のバリア体験をお届けします。">
+    <title>Widi Bali - 日本語対応のバリア旅行代理店</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#006400',
+                        'secondary': '#FFD700',
+                        'accent': '#f0f8ff'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1537072647439-dc4d6024122e?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .fall-in {
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fall-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            height: 600px;
+            padding-top:50px;
+            
+        }
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .slide-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .slide-content p {
+            font-size: 1rem;
+        }
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .prev-btn {
+            left: 10px;
+        }
+        .next-btn {
+            right: 10px;
+        }
+        .dots-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .dot.active {
+            background: white;
+        }
+        .slide-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        .slide-button:hover {
+            background: rgba(0, 100, 0, 0.9);
+            transform: scale(1.05);
+        }
+        @media (max-width: 768px) {
+            .slider-container {
+                height: 450px;
+            }
+            .slide-content {
+                padding: 1rem;
+            }
+            .slide-content h3 {
+                font-size: 1.2rem;
+            }
+            .slide-content p {
+                font-size: 0.9rem;
+            }
+            .slide-button {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 100;
+        }
+        .mobile-menu.active {
+            display: flex;
+        }
+        .mobile-menu button {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s;
+        }
+        .mobile-menu button:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+<!-- Floating Chat Button with WhatsApp and LINE options -->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-2">
+  <!-- Opsi chat (Awalnya disembunyikan) -->
+  <div id="chatOptions" class="hidden flex flex-col space-y-2 mb-1">
+    <a href="https://wa.me/082342482030" target="_blank" aria-label="WhatsApp" title="WhatsApp" class="bg-green-500 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-green-600 transition duration-300">
+      <i class="fab fa-whatsapp text-xl"></i>
+    </a>
+    <a href="https://line.me/R/ti/p/@widibali_lokalguide" target="_blank" aria-label="LINE" title="LINE" class="bg-green-700 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-green-800 transition duration-300">
+      <i class="fab fa-line text-xl"></i>
+    </a>
+  </div>
+  <!-- Tombol utama -->
+  <button id="chatToggleBtn" title="Chat options" aria-label="Chat options" class="bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-green-700 transition duration-300 focus:outline-none">
+    <i class="fas fa-comments text-xl"></i>
+  </button>
+</div>
+
+
+    <!-- Header -->
+    <header class="bg-white shadow-md fixed w-full z-40">
+        <div class="container mx-auto px-4 py-3 flex flex-col items-center">
+            <div class="text-2xl font-bold text-primary mb-2">Widi Bali</div>
+            <div class="flex items-center w-full">
+                <nav class="hidden md:flex space-x-4 text-sm">
+                    <button onclick="scrollToSection('home')" class="hover:text-primary transition">ホーム</button>
+                    <button onclick="scrollToSection('car')" class="hover:text-primary transition">カーチャーター</button>
+                    <button onclick="scrollToSection('tour')" class="hover:text-primary transition">パッケージツアー</button>
+                    <button onclick="scrollToSection('contact')" class="hover:text-primary transition">お問い合わせ</button>
+                </nav>
+                <button class="md:hidden text-gray-600 mt-2 ml-auto" id="menuButton">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            <div class="mobile-menu" id="mobileMenu">
+                <button onclick="scrollToSection('home'); toggleMobileMenu()">ホーム</button>
+                <button onclick="scrollToSection('car'); toggleMobileMenu()">カーチャーター</button>
+                <button onclick="scrollToSection('tour'); toggleMobileMenu()">パッケージツアー</button>
+                <button onclick="scrollToSection('contact'); toggleMobileMenu()">お問い合わせ</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Slider Section -->
+    <section id="home" class="relative w-full pt-20">
+        <div class="slider-container">
+            <div class="slider-wrapper" id="sliderWrapper">
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1693649113183-283327208912?q=80&w=437&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                    <div class="slide-content">
+                        <h3 class="text-white font-bold">バリア島での快適な旅</h3>
+                        <p class="text-white">専門ガイド付きのカーセンターでご案内します</p>
+                    </div>
+                    <button class="slide-button" onclick="scrollToSection('car')">詳細を見る</button>
+                </div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1575573330964-db3dad170190?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                    <div class="slide-content">
+                        <h3 class="text-white font-bold">パッケージツアー</h3>
+                        <p class="text-white">自然と文化を満喫できるツアー</p>
+                    </div>
+                    <button class="slide-button" onclick="scrollToSection('tour')">詳細を見る</button>
+                </div>
+                <div class="slide" style="background-image: url('https://plus.unsplash.com/premium_photo-1674539250113-156c53fef54b?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bGVtYm9uZ2FuJTIwc25vcmtlbGluZ3xlbnwwfHwwfHx8MA%3D%3D');">
+                    <div class="slide-content">
+                        <h3 class="text-white font-bold">ペニダ島ツアー</h3>
+                        <p class="text-white">美しい自然と岩場の魅力</p>
+                    </div>
+                    <button class="slide-button" onclick="scrollToSection('tour')">詳細を見る</button>
+                </div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1620104493388-8747c90fcc2d?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                    <div class="slide-content">
+                        <h3 class="text-white font-bold">日本語公認ガイド</h3>
+                        <p class="text-white">資格を持つ経験豊富な日本語ガイド</p>
+                    </div>
+                    <button class="slide-button" onclick="scrollToSection('tour')">詳細を見る</button>
+                </div>
+            </div>
+            <button class="slider-nav prev-btn" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-nav next-btn" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="dots-container" id="dotsContainer"></div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-16 bg-accent">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-primary">私たちについて</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2 fall-in">
+                    <img src="https://uploads.onecompiler.io/43c72bhcy/449pa7dgv/driver%202.jfif" alt="Kadek Widi" class="rounded-full mx-auto shadow-lg">
+                </div>
+                <div class="md:w-1/2 fall-in delay-100">
+                    <h3 class="text-2xl font-bold mb-4 text-primary">Kadek Widiが運営</h3>
+                    <p class="mb-4 text-gray-700">当社は、日本語が堪能なプロフェッショナルガイドによるバリ島旅行サポートを提供しております。</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> 安心</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> 丁寧</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> 親切</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> 日本語対応可能</li>
+                    </ul>
+                    <p class="text-gray-700">皆様に安心して快適なバリ体験をお届けするため、常に丁寧で親切なサービスを提供いたします。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Car Charter Section -->
+    <section id="car" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-primary">カーチャーター</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card bg-white p-6 rounded-lg shadow-md border border-gray-200 fade-in">
+                    <h3 class="text-xl font-bold mb-4 text-primary">10時間</h3>
+                    <p class="text-3xl font-bold mb-4">¥10,000</p>
+                    <p class="text-gray-600 mb-6">10時間の日本語運転手兼ガイドのカーチャーター</p>
+<img src="https://uploads.onecompiler.io/43c72bhcy/44exw4cpy/file_00000000ecd871faaf83f8224e260b8b.png" alt="Airport Transfer" class="w-full rounded-md mb-4" />
+
+                    
+<a href="yoyaku.html" class="w-full bg-primary text-white py-2 rounded hover:bg-green-700 transition inline-block text-center mb-2">
+  今すぐ予約
+</a>
+
+<a href="charter.html" class="w-full bg-secondary text-black py-2 rounded hover:bg-yellow-400 transition inline-block text-center">
+  詳しく見る
+</a>
+                   
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md border border-gray-200 fade-in">
+                    <h3 class="text-xl font-bold mb-4 text-primary">空港送迎サービス</h3>
+                    <p class="text-3xl font-bold mb-4">¥4,000</p>
+                    <p class="text-gray-600 mb-6">空港からホテルへの送迎サービス（1往復）</p>
+                    <img src="https://uploads.onecompiler.io/43c72bhcy/44exw4cpy/file_000000001b6071faab467b3bfc289bcb.png" alt="Airport Transfer" class="w-full rounded-md mb-4" />
+
+<a href="yoyaku.html" class="w-full bg-primary text-white py-2 rounded hover:bg-green-700 transition inline-block text-center mb-2">
+  今すぐ予約
+</a>
+
+<a href="apt.html" class="w-full bg-secondary text-black py-2 rounded hover:bg-yellow-400 transition inline-block text-center">
+  詳しく見る
+</a>
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tour Packages Section -->
+    <section id="tour" class="py-16 bg-accent">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-primary">パッケージツアー</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card bg-white p-6 rounded-lg shadow-md border border-gray-200 fade-in">
+                    <h3 class="text-xl font-bold mb-4 text-primary">バリ島人気寺院＆キンタマーニツアー</h3>
+                    <p class="text-gray-600 mb-4">伝統的な村並みと自然を体感する観光ツアー</p>
+                    <ul class="text-sm text-gray-500 mb-4 space-y-1">
+                        <li>・ブサキ寺院ツアー</li>
+                        <li>・ティルタ・ウンプル寺院ツアー</li>
+                        <li>・ランプヤン寺院ツアー</li>
+                        <li>・キンタマーニツアー</li>
+                        <li>・など、多彩なパッケージツアーをご用意しております。</li>
+                    </ul>
+<a href="yoyaku.html" class="w-full bg-primary text-white py-2 rounded hover:bg-green-700 transition inline-block text-center mb-2">
+  今すぐ予約
+</a>
+
+<a href="package.html" class="w-full bg-secondary text-black py-2 rounded hover:bg-yellow-400 transition inline-block text-center">
+  詳しく見る
+</a>
+          
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md border border-gray-200 fade-in">
+                    <h3 class="text-xl font-bold mb-4 text-primary">ペニダ島ツアー</h3>
+                    <p class="text-gray-600 mb-4">美しい海と迫力ある岩場の絶景を楽しむ</p>
+                    <ul class="text-sm text-gray-500 mb-4 space-y-1">
+                        <li>・大自然あふれる絶景スポット巡り</li>
+                        <li>・美しいビーチ訪問</li>
+                        <li>・人気フォトスポットでの写真撮影</li>
+                        <li>・写真撮影スポット</li>
+                        <li>・ガイド付きツアー</li>
+                    </ul>
+<a href="yoyaku.html" class="w-full bg-primary text-white py-2 rounded hover:bg-green-700 transition inline-block text-center mb-2">
+  今すぐ予約
+</a>
+
+<a href="penida.html" class="w-full bg-secondary text-black py-2 rounded hover:bg-yellow-400 transition inline-block text-center">
+  詳しく見る
+</a>
+          
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md border border-gray-200 fade-in">
+                    <h3 class="text-xl font-bold mb-4 text-primary">レンボンガン島ツアー</h3>
+                    <p class="text-gray-600 mb-4">神秘的な自然と文化体験</p>
+                    <ul class="text-sm text-gray-500 mb-4 space-y-1">
+                        <li>・マングローブツアー</li>
+                        <li>・シュノーケリング体験</li>
+                        <li>・日本語対応の専属プロフェッショナルガイド付き</li>
+                        
+                        <li>・写真撮影スポット</li>
+                    </ul>
+<a href="yoyaku.html" class="w-full bg-primary text-white py-2 rounded hover:bg-green-700 transition inline-block text-center mb-2">
+  今すぐ予約
+</a>
+
+<a href="lembongan.html" class="w-full bg-secondary text-black py-2 rounded hover:bg-yellow-400 transition inline-block text-center">
+  詳しく見る
+</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-primary">私たちの強み</h2>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                <div class="text-center fade-in">
+                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-primary">
+                        <i class="fas fa-language text-2xl"></i>
+                    </div>
+                    <p class="font-bold">日本語ドライバー</p>
+                </div>
+                <div class="text-center fade-in delay-100">
+                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-primary">
+                        <i class="fas fa-user-friends text-2xl"></i>
+                    </div>
+                    <p class="font-bold">プライベートツアー</p>
+                </div>
+                <div class="text-center fade-in delay-200">
+                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-primary">
+                        <i class="fas fa-clock text-2xl"></i>
+                    </div>
+                    <p class="font-bold">柔軟なスケジュール</p>
+                </div>
+                <div class="text-center fade-in delay-300">
+                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-primary">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <p class="font-bold">安全運転</p>
+                </div>
+                <div class="text-center fade-in delay-400">
+                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-primary">
+                        <i class="fas fa-tag text-2xl"></i>
+                    </div>
+                    <p class="font-bold">明確な料金</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+<!-- Bagian お問い合わせ di index.html, update seperti berikut -->
+
+<section id="contact" class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12 text-primary">お問い合わせ</h2>
+
+    <div class="max-w-2xl mx-auto bg-accent p-8 rounded-lg shadow-lg fade-in">
+      <div class="text-center mb-8">
+        <img src="https://uploads.onecompiler.io/43c72bhcy/449pa7dgv/driver%202.jfif" alt="Kadek Widi" class="rounded-xl w-16 h-16 mx-auto mb-4 object-cover" />
+        <h3 class="text-xl font-bold text-primary">Kadek Widi</h3>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex items-start">
+          <i class="fas fa-envelope text-primary mt-1 mr-3"></i>
+          <span>widibali45@gmail.com</span>
+        </div>
+        <div class="flex items-start">
+          <i class="fab fa-whatsapp text-green-500 mt-1 mr-3"></i>
+          <span>082342482030</span>
+        </div>
+        <div class="flex items-start">
+          <i class="fab fa-facebook text-blue-600 mt-1 mr-3"></i>
+          <a href="https://www.facebook.com/share/1F9pQWogpB/" target="_blank" class="hover:underline text-blue-600">
+            Widi Bali
+          </a>
+        </div>
+        <div class="flex items-start">
+          <i class="fab fa-instagram text-pink-500 mt-1 mr-3"></i>
+          <a href="https://www.instagram.com/widi_bali25" target="_blank" class="hover:underline text-pink-500 font-semibold" aria-label="Instagramを開く">
+            widi_bali25
+          </a>
+        </div>
+        <div class="flex items-start">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINEアイコン" class="w-5 h-5 mt-1 mr-3" />
+          <a href="https://line.me/R/ti/p/@widibali_lokalguide" target="_blank" class="hover:underline text-green-600 font-semibold" aria-label="LINEで連絡する">
+            widibali_lokalguide
+          </a>
+        </div>
+      </div>
+
+<div class="mt-8 flex flex-col items-center space-y-4">
+  <button onclick="window.open('https://wa.me/082342482030', '_blank')" class="bg-green-500 text-white px-6 py-3 rounded-full font-bold hover:bg-green-600 transition w-40">
+    WhatsAppで予約
+  </button>
+
+  <button onclick="window.open('https://line.me/R/ti/p/@widibali_lokalguide', '_blank')" class="bg-green-600 text-white px-6 py-3 rounded-full font-bold hover:bg-green-700 transition w-40">
+    LINEで 予約
+  </button>
+</div>
+
+    </div>
+  </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2023 Widi Bali. All rights reserved.</p>
+        </div>
+        <div style="text-align:center;">
+  <span style="font-size:13px; color:#999;">
+    Website by 
+    <a href="https://www.facebook.com/kubuacademy" 
+       target="_blank" 
+       class="kubu-link">
+      Kubu Web Academy
+    </a>
+  </span>
+</div>
+
+<style>
+.kubu-link {
+  color: #999;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.kubu-link:hover {
+  color: #1877f2;
+}
+</style>
+    </footer>
+
+    <script>
+        // Hero slider functionality
+        document.addEventListener("DOMContentLoaded", function() {
+            const sliderWrapper = document.getElementById('sliderWrapper');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const dotsContainer = document.getElementById('dotsContainer');
+            const menuButton = document.getElementById('menuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            let currentIndex = 0;
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            
+            // Create dots
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+            
+            const dots = document.querySelectorAll('.dot');
+            
+            function updateSlider() {
+                sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Update active dot
+                dots.forEach((dot, index) => {
+                    if (index === currentIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+            
+            function goToSlide(index) {
+                currentIndex = index;
+                updateSlider();
+            }
+            
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateSlider();
+            }
+            
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                updateSlider();
+            }
+            
+            // Auto slide every 5 seconds
+            let slideInterval = setInterval(nextSlide, 5000);
+            
+            // Pause auto slide when hovering
+            const sliderContainer = document.querySelector('.slider-container');
+            sliderContainer.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+            
+            sliderContainer.addEventListener('mouseleave', () => {
+                slideInterval = setInterval(nextSlide, 5000);
+            });
+            
+            // Event listeners
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            
+            // Mobile menu functionality
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('active');
+            }
+            
+            menuButton.addEventListener('click', toggleMobileMenu);
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInside = mobileMenu.contains(event.target) || menuButton.contains(event.target);
+                if (!isClickInside && mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                }
+            });
+            
+            // Fade-in animation on scroll
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const fallElements = document.querySelectorAll('.fall-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => {
+                observer.observe(el);
+            });
+            
+            fallElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // Scroll to section function
+            window.scrollToSection = function(id) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                    // Close mobile menu after scrolling
+                    if (mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                    }
+                }
+            };
+        });
+    </script>
+    
+<script>
+  const chatToggleBtn = document.getElementById('chatToggleBtn');
+  const chatOptions = document.getElementById('chatOptions');
+  
+  chatToggleBtn.addEventListener('click', () => {
+    if (chatOptions.classList.contains('hidden')) {
+      chatOptions.classList.remove('hidden');
+    } else {
+      chatOptions.classList.add('hidden');
+    }
+  });
+
+  // Klik di luar area tombol supaya opsi chat hilang
+  document.addEventListener('click', (e) => {
+    if (!chatToggleBtn.contains(e.target) && !chatOptions.contains(e.target)) {
+      chatOptions.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
