@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>カーチャーター・車チャーター - Widi Bali</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+<!--link chatbbutton-->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background-color: #f9fafb;
+      color: #065f46;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<header class="relative w-full h-72 md:h-96 overflow-hidden flex flex-col">
+  <div class="bg-white text-black flex items-center justify-center py-2 text-xl font-bold z-20 px-4">
+    <button 
+      onclick="history.back()" 
+      aria-label="戻る" 
+      class="mr-4 p-1 rounded hover:bg-gray-200 transition"
+      title="戻る"
+      >
+      <!-- Ikon panah kiri -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    <span class="flex-grow text-center">Widi Bali</span>
+<a href="yoyaku.html" 
+   class="ml-4 bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700 transition inline-block text-center"
+   aria-label="予約"
+   >
+  予約
+</a>
+
+    
+    
+  </div>
+  <div class="relative flex-grow overflow-hidden">
+    <div id="slider" class="absolute inset-0 flex transition-transform duration-1000 ease-in-out">
+      <img src="https://images.unsplash.com/photo-1588625232507-a337a3bd2e43?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dGFuYWglMjBsb3R8ZW58MHx8MHx8fDA%3D"
+      class="w-full h-64 md:h-96 object-cover flex-shrink-0" />
+      <img src="https://images.unsplash.com/photo-1575573330964-db3dad170190?q=80&w=387&auto=format&fit=crop" class="w-full h-64 md:h-96 object-cover flex-shrink-0" />
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIsFiOEbfOv-41xaso2B82mro_iCgZie-GzNKs63Cmgw&s=10" class="w-full h-64 md:h-96 object-cover flex-shrink-0"
+      />
+    
+<img src="https://jwc.gotra-resources.my.id/web-upload/1739946390-19-02-2025-b2BtpxXFHvcjyEeU0KA6DhJiNY194fnI.webp" class="w-full h-64 md:h-96 object-cover flex-shrink-0"
+      />
+    
+    
+    </div>
+    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center z-10">
+      <h1 class="text-white text-3xl md:text-5xl font-bold drop-shadow-lg">カーチャーター・車チャーター</h1>
+    </div>
+  </div>
+</header>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('slider');
+    const totalSlides = slider.children.length;
+    let currentIndex = 0;
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }, 4000);
+  });
+</script>
+
+
+
+  <!-- Main content -->
+  <main class="container mx-auto p-6 flex-grow">
+    <h2 class="text-3xl font-bold mb-6 text-green-900">カーチャーター・車チャーター</h2>
+    <p class="mb-4">
+      Widi Baliのカーチャーターサービスは、日本語対応の車チャーターです。<br>
+      ドライバー兼ガイドは日本語の正式資格保有のプロフェッショナルで、バリで5年以上の経験があります。
+    </p>
+    <p class="mb-4">
+      以下の料金は「1台あたり」の料金であり、「1人あたり」ではありません。<br>
+      また、プライベートツアーであり、他のお客様とのシェアではありません。
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-3">目的・ルートについて</h3>
+    <p class="mb-4">
+      ご希望のルートや目的地はお客様の自由に決められます。<br>
+      予約時にスタッフに相談したり、チャーター当日にガイドにご相談いただくことも可能です。<br>
+      ルートや目的は非常に柔軟に対応いたします。
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-3">料金について</h3>
+    <ul class="list-disc list-inside mb-4">
+      <li>料金：1時間あたり 1,000円</li>
+      <li>最低チャーター時間：4時間</li>
+      <li>支払い方法：チャーター終了後に直接ドライバーへお支払いください。</li>
+      <li>支払い通貨：日本円（¥）またはインドネシアルピア（Rp）どちらも対応可能です。</li>
+      <li>事前の支払い不要で、予約時に料金の支払いは発生しません。</li>
+    </ul>
+
+    <div class="bg-green-100 border border-green-400 p-4 rounded-lg text-green-900 font-semibold">
+      安心で快適なバリ島のプライベートカーチャーターをお楽しみください。
+    </div>
+  </main>
+<h3 class="text-xl font-semibold mt-6 mb-3">料金詳細（1時間毎に1千円）</h3>
+<table class="table-auto border-collapse border border-green-700 w-full max-w-md mx-auto mb-6 text-green-900">
+  <thead>
+    <tr class="bg-green-200">
+      <th class="border border-green-700 px-4 py-2">時間（時間）</th>
+      <th class="border border-green-700 px-4 py-2">料金（円）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="border border-green-700 px-4 py-2 text-center">5時間</td>
+      <td class="border border-green-700 px-4 py-2 text-center">¥5,000</td>
+    </tr>
+    <tr class="bg-green-50">
+      <td class="border border-green-700 px-4 py-2 text-center">6時間</td>
+      <td class="border border-green-700 px-4 py-2 text-center">¥6,000</td>
+    </tr>
+    <tr>
+      <td class="border border-green-700 px-4 py-2 text-center">7時間</td>
+      <td class="border border-green-700 px-4 py-2 text-center">¥7,000</td>
+    </tr>
+    <tr class="bg-green-50">
+      <td class="border border-green-700 px-4 py-2 text-center">8時間</td>
+      <td class="border border-green-700 px-4 py-2 text-center">¥8,000</td>
+    </tr>
+    <tr>
+      <td class="border border-green-700 px-4 py-2 text-center">9時間</td>
+      <td class="border border-green-700 px-4 py-2 text-center">¥9,000</td>
+    </tr>
+    <tr class="bg-green-50">
+      <td class="border border-green-700 px-4 py-2 text-center">10時間</td>
+      <td class="border border-green-700 px-4 py-2 text-center">¥10,000</td>
+    </tr>
+    <tr>
+      <td class="border border-green-700 px-4 py-2 text-center">11時間</td>
+      <td class="border border-green-700 px-4 py-2 text-center">¥11,000</td>
+    </tr>
+    <tr class="bg-green-50">
+      <td class="border border-green-700 px-4 py-2 text-center">12時間</td>
+      <td class="border border-green-700 px-4 py-2 text-center">¥12,000</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="text-center mt-8">
+  <a href="yoyaku.html" class="inline-block bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 font-bold transition">
+    今すぐ予約
+  </a>
+</div>
+<br>
+
+  <!-- Footer -->
+  <footer class="bg-green-900 text-white p-4 text-center">
+    &copy; 2023 Widi Bali. All rights reserved.
+  </footer>
+  
+
+<!--chatbutton-->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-2">
+  <div id="chatOptions" class="hidden flex flex-col space-y-2 mb-1">
+    <a href="https://wa.me/082342482030" target="_blank" aria-label="WhatsApp" title="WhatsApp" class="bg-green-500 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-green-600 transition duration-300">
+      <i class="fab fa-whatsapp text-xl"></i>
+    </a>
+    <a href="https://line.me/R/ti/p/@widibali_lokalguide" target="_blank" aria-label="LINE" title="LINE" class="bg-green-700 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-green-800 transition duration-300">
+      <i class="fab fa-line text-xl"></i>
+    </a>
+  </div>
+  <button id="chatToggleBtn" title="Chat options" aria-label="Chat options" class="bg-green-700 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-green-600 transition duration-300 focus:outline-none">
+    <i class="fas fa-comments text-xl"></i>
+  </button>
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const chatToggleBtn = document.getElementById('chatToggleBtn');
+    const chatOptions = document.getElementById('chatOptions');
+    chatToggleBtn.addEventListener('click', () => {
+      chatOptions.classList.toggle('hidden');
+    });
+  });
+</script>
+
+
+
+</body>
+</html>
